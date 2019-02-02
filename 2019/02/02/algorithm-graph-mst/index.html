@@ -96,20 +96,25 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Aden&#39;s little space">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="prim算法A为mst的子集 当剩余节点Q不为空集时 把A与Q的最短连线放入A中 伪代码(来自《算法导论》)123456789101112MST_PRIM(G,w,r)    for each u ∈ G.V        u.key = ∞        u.π = NIL    r.key = 0    Q = G.V    while Q ≠ Φ        u = EXTRACT_MIN">
+<meta name="keywords" content="algorithm,graph_theory,c++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图论-MST">
+<meta property="og:url" content="http://yoursite.com/2019/02/02/algorithm-graph-mst/index.html">
 <meta property="og:site_name" content="Aden&#39;s little space">
+<meta property="og:description" content="prim算法A为mst的子集 当剩余节点Q不为空集时 把A与Q的最短连线放入A中 伪代码(来自《算法导论》)123456789101112MST_PRIM(G,w,r)    for each u ∈ G.V        u.key = ∞        u.π = NIL    r.key = 0    Q = G.V    while Q ≠ Φ        u = EXTRACT_MIN">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-02-02T07:43:57.629Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Aden&#39;s little space">
+<meta name="twitter:title" content="图论-MST">
+<meta name="twitter:description" content="prim算法A为mst的子集 当剩余节点Q不为空集时 把A与Q的最短连线放入A中 伪代码(来自《算法导论》)123456789101112MST_PRIM(G,w,r)    for each u ∈ G.V        u.key = ∞        u.π = NIL    r.key = 0    Q = G.V    while Q ≠ Φ        u = EXTRACT_MIN">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/02/algorithm-graph-mst/">
 
 
 
@@ -119,7 +124,7 @@
   };
 </script>
 
-  <title>Aden's little space</title>
+  <title>图论-MST | Aden's little space</title>
   
 
 
@@ -167,8 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -206,7 +210,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -285,9 +289,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -319,10 +323,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/02/algorithm-graph-mst/" class="post-title-link" itemprop="url">图论-MST</a>
+          <h1 class="post-title" itemprop="name headline">图论-MST
+
               
             
           </h1>
@@ -385,9 +387,7 @@
       
 
       
-        
-          
-            <h2 id="prim算法"><a href="#prim算法" class="headerlink" title="prim算法"></a>prim算法</h2><p><code>A</code>为<code>mst</code>的子集 当剩余节点<code>Q</code>不为空集时 把<code>A</code>与<code>Q</code>的最短连线放入A中</p>
+        <h2 id="prim算法"><a href="#prim算法" class="headerlink" title="prim算法"></a>prim算法</h2><p><code>A</code>为<code>mst</code>的子集 当剩余节点<code>Q</code>不为空集时 把<code>A</code>与<code>Q</code>的最短连线放入A中</p>
 <h4 id="伪代码-来自《算法导论》"><a href="#伪代码-来自《算法导论》" class="headerlink" title="伪代码(来自《算法导论》)"></a>伪代码(来自《算法导论》)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MST_PRIM(G,w,r)</span><br><span class="line">    <span class="keyword">for</span> each u ∈ G.V</span><br><span class="line">        u.key = ∞</span><br><span class="line">        u.π = NIL</span><br><span class="line">    r.key = <span class="number">0</span></span><br><span class="line">    Q = G.V</span><br><span class="line">    <span class="keyword">while</span> Q ≠ Φ</span><br><span class="line">        u = EXTRACT_MIN(Q)</span><br><span class="line">        <span class="keyword">for</span> each v ∈ G.Adj[u]</span><br><span class="line">            <span class="keyword">if</span> v ∈ Q <span class="keyword">and</span> w(u, v) &lt; v.key</span><br><span class="line">                v.π = u</span><br><span class="line">                v.key = w(u, v)</span><br></pre></td></tr></table></figure>
 <p>函数的参数为 连通图<code>G</code> 权值<code>w</code> <code>mst</code>的根节点<code>r</code><br>    <code>w(u, v)</code>为连接<code>u</code> <code>v</code>的边的权值<br><code>Q</code>是基于<code>.key</code>的小根堆</p>
 <p><code>r.key = 0</code>将把<code>r</code>作为<code>A</code>的开始<br>每次循环的开始总有 <code>u∪A ∈ mst</code><br>MST-PRIM的执行过程中 会更新Q中各节点与A的最短连线的距离<code>.key</code> 并将其的另一端储存在<code>.π</code>中<br>算法终止时有 <code>mst = A = {(v, v.pre): v ∈ V - {r}}</code></p>
@@ -402,8 +402,6 @@
 </ul>
 <p>最后把<code>mst</code>中<code>root</code>的父节点设为自身<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mst.edge[root].start_id = root;</span><br><span class="line">mst.edge[root].end_id = root;</span><br><span class="line">mst.edge[root].weight = <span class="number">0</span>; <span class="comment">// mst.edge[root].end = root</span></span><br></pre></td></tr></table></figure></p>
 
-          
-        
       
     </div>
 
@@ -424,334 +422,40 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/07/her-1/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Aden">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aden's little space">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/07/her-1/" class="post-title-link" itemprop="url">time</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-07 20:05:12" itemprop="dateCreated datePublished" datetime="2019-01-07T20:05:12+08:00">2019-01-07</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-01-29 21:15:03" itemprop="dateModified" datetime="2019-01-29T21:15:03+08:00">2019-01-29</time>
-              
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
           
-            
+            <a href="/tags/graph-theory/" rel="tag"># graph_theory</a>
           
-
+            <a href="/tags/c/" rel="tag"># c++</a>
           
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          _
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/01/07/her-1/#more" rel="contents">
-                阅读全文 &raquo;
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/07/her-1/" rel="next" title="time">
+                <i class="fa fa-chevron-left"></i> time
               </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/her-0/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Aden">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aden's little space">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/06/her-0/" class="post-title-link" itemprop="url">words</a>
-              
             
-          </h1>
-        
+          </div>
 
-        <div class="post-meta">
-          <span class="post-time">
+          <span class="post-nav-divider"></span>
 
+          <div class="post-nav-prev post-nav-item">
             
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-06 23:10:14" itemprop="dateCreated datePublished" datetime="2019-01-06T23:10:14+08:00">2019-01-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-01-07 22:17:21" itemprop="dateModified" datetime="2019-01-07T22:17:21+08:00">2019-01-07</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          _
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/01/06/her-0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -761,177 +465,15 @@
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/04/deployed_success/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Aden">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Aden's little space">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/04/deployed_success/" class="post-title-link" itemprop="url">蛤竟然成功了?!</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-04 20:00:00" itemprop="dateCreated datePublished" datetime="2019-01-04T20:00:00+08:00">2019-01-04</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-01-07 20:16:40" itemprop="dateModified" datetime="2019-01-07T20:16:40+08:00">2019-01-07</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>也是折腾了很久了…<br>‘做的欲望’来自<a href="https://lanceorsword.github.io/" target="_blank" rel="noopener">某老佬的博客</a></p>
-<p>用<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>搭建<br>主题用的是<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">NexT</a></p>
-<p>要不然…谈谈部署中遇到的问题吧</p>
-<ul>
-<li>首先是把deploy的配置写到了<code>themes\landscape\_config.yml</code>中…</li>
-<li>然后在windows的环境下<code>hexo d</code>由cmd一直不能正确执行 换到git bash才成功</li>
-<li>ok大概没了</li>
-<li><del>好吧我承认只是玩一玩markdown的列表</del></li>
-</ul>
-<p>ok继续<del>玩耍</del>复习</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -952,8 +494,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1035,6 +586,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#prim算法"><span class="nav-number">1.</span> <span class="nav-text">prim算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#伪代码-来自《算法导论》"><span class="nav-number">1.0.1.</span> <span class="nav-text">伪代码(来自《算法导论》)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-实现"><span class="nav-number">1.0.2.</span> <span class="nav-text">C++实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1153,6 +721,10 @@
   
 
   
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
 
   
 
@@ -1162,6 +734,8 @@
 
 
   
+  
+
 
   
 
