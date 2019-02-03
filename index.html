@@ -51,13 +51,13 @@
 <link rel="stylesheet" href="/css/main.css?v=6.7.0">
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg?v=6.7.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpg?v=6.7.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=6.7.0">
 
 
   <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
@@ -347,12 +347,24 @@
                 
               
 
-              <time title="创建时间：2019-02-02 11:07:03 / 修改时间：16:07:54" itemprop="dateCreated datePublished" datetime="2019-02-02T11:07:03+08:00">2019-02-02</time>
+              <time title="创建时间：2019-02-02 11:07:03" itemprop="dateCreated datePublished" datetime="2019-02-02T11:07:03+08:00">2019-02-02</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-02-03 18:33:38" itemprop="dateModified" datetime="2019-02-03T18:33:38+08:00">2019-02-03</time>
               
             
           </span>
@@ -397,11 +409,11 @@
       
         
           
-            <h2 id="prim算法"><a href="#prim算法" class="headerlink" title="prim算法"></a>prim算法</h2><p><code>A</code>为<code>mst</code>的子集 当剩余节点<code>Q</code>不为空集时 把<code>A</code>与<code>Q</code>的最短连线放入A中</p>
+            <h2 id="prim算法"><a href="#prim算法" class="headerlink" title="prim算法"></a>prim算法</h2><p>A⊆mst 当剩余节点集合Q不为空集时 把横跨切割(A, Q)的轻量级边放入A中</p>
 <h4 id="伪代码-来自《算法导论》"><a href="#伪代码-来自《算法导论》" class="headerlink" title="伪代码(来自《算法导论》)"></a>伪代码(来自《算法导论》)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MST_PRIM(G,w,r)</span><br><span class="line">    <span class="keyword">for</span> each u ∈ G.V</span><br><span class="line">        u.key = ∞</span><br><span class="line">        u.π = NIL</span><br><span class="line">    r.key = <span class="number">0</span></span><br><span class="line">    Q = G.V</span><br><span class="line">    <span class="keyword">while</span> Q ≠ Φ</span><br><span class="line">        u = EXTRACT_MIN(Q)</span><br><span class="line">        <span class="keyword">for</span> each v ∈ G.Adj[u]</span><br><span class="line">            <span class="keyword">if</span> v ∈ Q <span class="keyword">and</span> w(u, v) &lt; v.key</span><br><span class="line">                v.π = u</span><br><span class="line">                v.key = w(u, v)</span><br></pre></td></tr></table></figure>
-<p>函数的参数为 连通图<code>G</code> 权值<code>w</code> <code>mst</code>的根节点<code>r</code><br>    <code>w(u, v)</code>为连接<code>u</code> <code>v</code>的边的权值<br><code>Q</code>是基于<code>.key</code>的小根堆</p>
-<p><code>r.key = 0</code>将把<code>r</code>作为<code>A</code>的开始<br>每次循环的开始总有 <code>u∪A ∈ mst</code><br>MST-PRIM的执行过程中 会更新Q中各节点与A的最短连线的距离<code>.key</code> 并将其的另一端储存在<code>.π</code>中<br>算法终止时有 <code>mst = A = {(v, v.pre): v ∈ V - {r}}</code></p>
-<h4 id="C-实现"><a href="#C-实现" class="headerlink" title="C++实现"></a>C++实现</h4><p>代码中将用<code>edge</code>代替<code>Q</code>, <code>mst</code>代替<code>A</code></p>
+<p>函数的参数为 连通图G 权值w mst的根节点r<br>    <code>w(u, v)</code>表示边(u, v)的权值<br>Q是基于.key的小根堆</p>
+<p><code>r.key = 0</code>将把r作为A的开始<br>每次循环的开始总有 u∪A ⊆ mst<br><code>MST_PRIM</code>的执行过程中 会更新Q中各节点与A的最短边的距离.key 并将其的另一端储存在.π中<br>算法终止时有 mst = A = {(v, v.pre): v ∈ V - {r}}</p>
+<h4 id="C-实现"><a href="#C-实现" class="headerlink" title="C++实现"></a>C++实现</h4><p>代码中将用<code>edge</code>表示Q, <code>mst</code>表示A</p>
 <p>实现的过程中略微改变了思路<br>把<code>edge</code>的初始化去除<br>改为每次<code>mst</code>新增节点<code>current_node</code>时 做如下操作</p>
 <ul>
 <li><p>将所有与<code>current_node</code>相邻的边<code>push</code>入<code>edge</code></p>
@@ -412,6 +424,8 @@
 </li>
 </ul>
 <p>最后把<code>mst</code>中<code>root</code>的父节点设为自身<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mst.edge[root].start_id = root;</span><br><span class="line">mst.edge[root].end_id = root;</span><br><span class="line">mst.edge[root].weight = <span class="number">0</span>; <span class="comment">// mst.edge[root].end = root</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="一些补充的知识"><a href="#一些补充的知识" class="headerlink" title="一些补充的知识"></a>一些补充的知识</h2><p><img src="/images/Into-to-Algorithm-363-0.png" alt=""></p>
+<p><font size="2" color="#727272">摘自《算法导论》P363<font></font></font></p>
 
           
         
