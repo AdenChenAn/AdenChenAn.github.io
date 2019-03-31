@@ -302,6 +302,183 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/31/genetic-algorithm-draw-a-car-by-20-lines/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aden">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Aden's little space">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/31/genetic-algorithm-draw-a-car-by-20-lines/" class="post-title-link" itemprop="url">遗传算法-用20条线画一辆车</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-31 18:52:37 / 修改时间：19:53:27" itemprop="dateCreated datePublished" datetime="2019-03-31T18:52:37+08:00">2019-03-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+            <span id="/2019/03/31/genetic-algorithm-draw-a-car-by-20-lines/" class="leancloud_visitors" data-flag-title="遗传算法-用20条线画一辆车">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><del>嗯这是个悲伤的故事…</del><br>前段时间看到了遗传算法，非常想做个实例，于是决定用20条线段画一辆车</p>
+<h2 id="目标图像"><a href="#目标图像" class="headerlink" title="目标图像"></a>目标图像</h2><p>嗯先手动画一辆车作为目标<br><img src="/images/genetic-algorithm-target.jpg" alt=""></p>
+<p><font size="2" color="#727272">(512*512)<font></font></font></p>
+<h3 id="来点儿规定"><a href="#来点儿规定" class="headerlink" title="来点儿规定"></a>来点儿规定</h3><p>每条线都具有几个参数</p>
+<ul>
+<li>x1, y1, x2, y2 作为起点和终点的坐标</li>
+<li>r, g, b 为线颜色的rgb值</li>
+<li>weight 为线的粗细</li>
+</ul>
+<h3 id="先随机生成一点儿线条"><a href="#先随机生成一点儿线条" class="headerlink" title="先随机生成一点儿线条"></a>先随机生成一点儿线条</h3><p>每条线段存为[(x1, y1), (x2, y2), (r, g, b), weight]<br>一张图的所有线段为每一条线段组成的list<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_random_lines</span><span class="params">(line_num, height, width)</span>:</span></span><br><span class="line">    lines = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(line_num):</span><br><span class="line">        lines.append([</span><br><span class="line">            (randint(<span class="number">0</span>, height), randint(<span class="number">0</span>, width)),</span><br><span class="line">            (randint(<span class="number">0</span>, height), randint(<span class="number">0</span>, width)),</span><br><span class="line">            (randint(<span class="number">0</span>, <span class="number">255</span>), randint(<span class="number">0</span>, <span class="number">255</span>), randint(<span class="number">0</span>, <span class="number">255</span>)),</span><br><span class="line">            randint(<span class="number">1</span>, MAX_LINE_WIDTH)</span><br><span class="line">        ])</span><br><span class="line">    <span class="keyword">return</span> lines</span><br></pre></td></tr></table></figure></p>
+<h3 id="通过生成的list画出线条"><a href="#通过生成的list画出线条" class="headerlink" title="通过生成的list画出线条"></a>通过生成的list画出线条</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_lines</span><span class="params">(img, lines)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">        cv.line(img, tuple(line[<span class="number">0</span>]), tuple(line[<span class="number">1</span>]), tuple(line[<span class="number">2</span>]), line[<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="来个适应函数"><a href="#来个适应函数" class="headerlink" title="来个适应函数"></a>来个适应函数</h3><p>(以每个像素的rgb值参计算欧式距离)<br>其中的img1为目标图片(长度为512*512*3的向量)<br>将img2同样转换为512*512*3的向量后两者相减，相减后向量各值的平方相加，即为两图片的欧式距离<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_distance</span><span class="params">(img1, img2, height, width)</span>:</span></span><br><span class="line">    img2 = img2.astype(numpy.int64).reshape(height * width * img2.shape[<span class="number">2</span>])</span><br><span class="line">    difference = img1 - img2</span><br><span class="line">    <span class="keyword">return</span> sum(difference * difference)</span><br></pre></td></tr></table></figure></p>
+<h3 id="适者生存"><a href="#适者生存" class="headerlink" title="适者生存"></a>适者生存</h3><p>换句话说 杀一点儿弱小的图像<br>嗯但还是有偶然性的嘛 所以改成越弱小的图像有更大的被杀几率<br>传入的参数为[(index1, distance1), (index2, distance2), etc.]<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kill</span><span class="params">(distance)</span>:</span></span><br><span class="line">    distance.sort(key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>])</span><br><span class="line">    length = len(distance)</span><br><span class="line">    killed_num = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> killed_num * <span class="number">2</span> &lt; length:</span><br><span class="line">        i = randint(<span class="number">1</span>, length - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> distance[i][<span class="number">1</span>] <span class="keyword">and</span> random() &lt; i * <span class="number">1.0</span> / length:</span><br><span class="line">            killed_num += <span class="number">1</span></span><br><span class="line">            distance[i] = (distance[i][<span class="number">0</span>], <span class="keyword">None</span>)</span><br><span class="line">    <span class="keyword">return</span> distance</span><br></pre></td></tr></table></figure></p>
+<h3 id="造一点儿新的"><a href="#造一点儿新的" class="headerlink" title="造一点儿新的"></a>造一点儿新的</h3><p>不能没完没了的杀嘛 也得造一点儿新的<br>随机选择两个幸运的(没死的)图像<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_parent</span><span class="params">(distances)</span>:</span></span><br><span class="line">    max_index = len(distances) - <span class="number">1</span></span><br><span class="line">    index1 = randint(<span class="number">0</span>, max_index)</span><br><span class="line">    <span class="keyword">while</span> distances[index1][<span class="number">1</span>] <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        index1 = randint(<span class="number">0</span>, max_index)</span><br><span class="line"></span><br><span class="line">    index2 = randint(<span class="number">0</span>, max_index)</span><br><span class="line">    <span class="keyword">while</span> distances[index2][<span class="number">1</span>] <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> index1 == index2:</span><br><span class="line">        index2 = randint(<span class="number">0</span>, max_index)</span><br><span class="line">    <span class="keyword">return</span> index1, index2</span><br></pre></td></tr></table></figure></p>
+<p>通过这两个图像产生下一代<br>(父母双方的每一条线的每一个参数 都有50%的可能遗传到下一代)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_hybrid</span><span class="params">(lines1, lines2, height, width)</span>:</span></span><br><span class="line">    new_lines = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(lines1)):</span><br><span class="line">        new_lines.append([])</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> xrange(<span class="number">4</span>):</span><br><span class="line">            <span class="keyword">if</span> randint(<span class="number">1</span>, <span class="number">2</span>) == <span class="number">1</span>:</span><br><span class="line">                new_lines[i].append(lines1[i][j])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                new_lines[i].append(lines2[i][j])</span><br><span class="line">        new_lines[i] = offset_line(new_lines[i], height, width)</span><br><span class="line">    <span class="keyword">return</span> new_lines</span><br></pre></td></tr></table></figure></p>
+<p>重复产生新个体直到恢复原来数量(50)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hybrid</span><span class="params">(target, distances, height, width)</span>:</span></span><br><span class="line">    img = numpy.zeros((height, width, <span class="number">3</span>), numpy.uint8)</span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> xrange(len(distances)):</span><br><span class="line">        i, distance = distances[index]</span><br><span class="line">        <span class="keyword">if</span> distance <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            index1, index2 = get_parent(distances)</span><br><span class="line">            lines1 = load_lines_from_file(<span class="string">r"D:\test\genetic_algorithm\\"</span> + str(index1) + <span class="string">".txt"</span>)</span><br><span class="line">            lines2 = load_lines_from_file(<span class="string">r"D:\test\genetic_algorithm\\"</span> + str(index2) + <span class="string">".txt"</span>)</span><br><span class="line">            new_lines = _hybrid(lines1, lines2, height, width)</span><br><span class="line">            img.fill(<span class="number">255</span>)</span><br><span class="line">            draw_lines(img, new_lines)</span><br><span class="line">            cv.imwrite(<span class="string">r"D:\test\genetic_algorithm\\"</span> + str(i) + <span class="string">".jpg"</span>, img)</span><br><span class="line">            distances[index] = (distances[index][<span class="number">0</span>], get_distance(target, img, height, width))</span><br><span class="line">            write_lines_to_file(<span class="string">r"D:\test\genetic_algorithm\\"</span> + str(i) + <span class="string">".txt"</span>, new_lines)</span><br><span class="line">    <span class="keyword">return</span> distances</span><br></pre></td></tr></table></figure></p>
+<h3 id="变异"><a href="#变异" class="headerlink" title="变异"></a>变异</h3><p>每个新生儿来一丢丢的变异<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">offset</span><span class="params">(n, min_val, max_val, offset_max)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n - offset_max &lt; min_val:</span><br><span class="line">        n += randint(<span class="number">0</span>, offset_max)</span><br><span class="line">    <span class="keyword">elif</span> n + offset_max &gt; max_val:</span><br><span class="line">        n -= randint(-offset_max, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        n += randint(-offset_max, offset_max)</span><br><span class="line">    <span class="keyword">return</span> n</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">offset_line</span><span class="params">(line, height, width)</span>:</span></span><br><span class="line">    line[<span class="number">0</span>][<span class="number">0</span>] = offset(line[<span class="number">0</span>][<span class="number">0</span>], <span class="number">0</span>, height, <span class="number">50</span>)</span><br><span class="line">    line[<span class="number">0</span>][<span class="number">1</span>] = offset(line[<span class="number">0</span>][<span class="number">1</span>], <span class="number">0</span>, width, <span class="number">50</span>)</span><br><span class="line">    line[<span class="number">1</span>][<span class="number">0</span>] = offset(line[<span class="number">1</span>][<span class="number">0</span>], <span class="number">0</span>, height, <span class="number">50</span>)</span><br><span class="line">    line[<span class="number">1</span>][<span class="number">1</span>] = offset(line[<span class="number">1</span>][<span class="number">1</span>], <span class="number">0</span>, width, <span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">    line[<span class="number">2</span>][<span class="number">0</span>] = offset(line[<span class="number">2</span>][<span class="number">0</span>], <span class="number">0</span>, <span class="number">255</span>, <span class="number">20</span>)</span><br><span class="line">    line[<span class="number">2</span>][<span class="number">1</span>] = offset(line[<span class="number">2</span>][<span class="number">1</span>], <span class="number">0</span>, <span class="number">255</span>, <span class="number">20</span>)</span><br><span class="line">    line[<span class="number">2</span>][<span class="number">2</span>] = offset(line[<span class="number">2</span>][<span class="number">2</span>], <span class="number">0</span>, <span class="number">255</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">    line[<span class="number">3</span>] = offset(line[<span class="number">3</span>], <span class="number">1</span>, MAX_LINE_WIDTH, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> line</span><br></pre></td></tr></table></figure></p>
+<h3 id="开始运行这个伟大的虚拟世界！"><a href="#开始运行这个伟大的虚拟世界！" class="headerlink" title="开始运行这个伟大的虚拟世界！"></a>开始运行这个伟大的虚拟世界！</h3><p>噔噔噔噔！！<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate</span><span class="params">(target)</span>:</span></span><br><span class="line">    target = cv.imread(target)</span><br><span class="line">    height = target.shape[<span class="number">0</span>]</span><br><span class="line">    width = target.shape[<span class="number">1</span>]</span><br><span class="line">    target = target.astype(numpy.int64).reshape(height * width * target.shape[<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">    img = numpy.zeros((height, width, <span class="number">3</span>), numpy.uint8)</span><br><span class="line">    distance = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">0</span>, <span class="number">50</span>):</span><br><span class="line">        lines = get_random_lines(<span class="number">20</span>, height, width)</span><br><span class="line">        img.fill(<span class="number">255</span>)</span><br><span class="line">        draw_lines(img, lines)</span><br><span class="line">        cv.imwrite(<span class="string">r"D:\test\genetic_algorithm\\"</span> + str(i) + <span class="string">".jpg"</span>, img)</span><br><span class="line">        write_lines_to_file(<span class="string">r"D:\test\genetic_algorithm\\"</span> + str(i) + <span class="string">".txt"</span>, lines)</span><br><span class="line">        distance.append((i, get_distance(target, img, height, width)))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">0</span>, <span class="number">100</span>):</span><br><span class="line">        <span class="keyword">print</span> i, sorted(distance, key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>])[:<span class="number">5</span>]</span><br><span class="line">        distance = kill(distance)</span><br><span class="line">        distance = hybrid(target, distance, height, width)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    generate(<span class="string">r"D:\test\test\target.jpg"</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>然而…似乎也不美好… <del>毕竟开头提到了这是个悲伤的故事</del><br>50个个体每个20条线经过100次迭代<br><img src="/images/genetic-algorithm-results.jpg" alt=""></p>
+<p>TO改进LIST:</p>
+<ul>
+<li>或许…遗传的时候不应该每条线的每个参数分别遗传？</li>
+<li>嗯…貌似50个图像100次迭代有点儿少(嗯速度太慢了)</li>
+<li>大约可以通过没被杀的图像产生新的50个图像(而不是通过25个图像产生的图像补齐剩下的25个图像)</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/11/func-img-plotting/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -906,7 +1083,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-16 22:07:03" itemprop="dateModified" datetime="2019-03-16T22:07:03+08:00">2019-03-16</time>
+                <time title="修改时间：2019-03-17 14:52:28" itemprop="dateModified" datetime="2019-03-17T14:52:28+08:00">2019-03-17</time>
               
             
           </span>
@@ -1390,7 +1567,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1415,7 +1592,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1602,6 +1783,8 @@
 
   
   
+    
+      
     
       
     
